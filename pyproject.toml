@@ -8,4 +8,5 @@ dependencies = [
     "langchain>=0.3.27",
     "langchain-core>=0.3.76",
     "python-dotenv>=1.1.1",
+    "streamlit>=1.49.1",
 ]
