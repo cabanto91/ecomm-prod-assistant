@@ -1,10 +1,12 @@
+import os
 import streamlit as st
 from prod_assistant.etl.data_scrapper import FlipkartScraper
 from prod_assistant.etl.data_ingestion import DataIngestion
-import os
 
-output_path = "data/product_reviews.csv"
-flipkart_scraper = FlipkartScraper(output_dir=output_path)
+output_dir = "data"
+output_file = "product_reviews.csv"
+output_path = os.path.join(output_dir, output_file)
+flipkart_scraper = FlipkartScraper(output_dir=output_dir)
 st.title("📦 Product Review Scraper")
 
 if "product_inputs" not in st.session_state:
@@ -59,12 +61,17 @@ if st.button("🚀 Start Scraping"):
 
         final_data = list(unique_products.values())
         st.session_state["scraped_data"] = final_data  # store in session
-        flipkart_scraper.save_to_csv(final_data, output_path)
-        st.success("✅ Data saved to `data/product_reviews.csv`")
+        flipkart_scraper.save_to_csv(final_data, output_file)
+        st.success(f"✅ Data saved to `{output_path}`")
+        
+        # Use with statement for file handling to ensure it's properly closed
+        with open(output_path, "rb") as f:
+            data = f.read()
+        
         st.download_button(
             "📥 Download CSV",
-            data=open(output_path, "rb"),
-            file_name="product_reviews.csv",
+            data=data,
+            file_name=output_file,
         )
 
 # This stays OUTSIDE "if st.button('Start Scraping')"
