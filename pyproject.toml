@@ -19,6 +19,7 @@ dependencies = [
     "python-dotenv==1.1.1",
     "python-multipart==0.0.20",
     "selenium==4.35.0",
+    "setuptools>=80.9.0",
     "streamlit==1.49.1",
     "structlog==25.4.0",
     "undetected-chromedriver==3.5.5",
