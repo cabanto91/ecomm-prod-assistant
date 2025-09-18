@@ -12,3 +12,6 @@ wheels/
 env/
 .venv/
 .log
+logs/
+logs/*.log
+ecomm_prod_assistant.egg-info
