@@ -94,7 +94,7 @@ class Retriever:
 
 
 if __name__ == "__main__":
-    user_query = "Can you suggest Samsung Galaxy S25 Ultra?"
+    user_query = "Can you suggest Price Samsung Galaxy S25 Ultra?"
 
     retriever_obj = Retriever()
 
