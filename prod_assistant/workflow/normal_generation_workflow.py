@@ -2,10 +2,10 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 
-from prompt_library.prompts import PROMPT_REGISTRY, PromptType
-from retriever.retrieval import Retriever
-from utils.model_loader import ModelLoader
-from evaluation.ragas_eval import (
+from prod_assistant.prompt_library.prompts import PROMPT_REGISTRY, PromptType
+from prod_assistant.retriever.retrieval import Retriever
+from prod_assistant.utils.model_loader import ModelLoader
+from prod_assistant.evaluation.ragas_eval import (
     evaluate_context_precision,
     evaluate_response_relevancy,
 )

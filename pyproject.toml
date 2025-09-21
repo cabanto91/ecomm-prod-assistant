@@ -9,22 +9,28 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "cachetools>=5.5.2",
     "fastapi>=0.116.1",
     "langchain==0.3.27",
     # TIP: 'langchain-core' ko alag pin na karo; 'langchain' sahi version le aayega.
     # Agar zaroori ho, to compatible pair hi pin karo.
     "python-dotenv==1.1.1",
+    "setuptools>=80.9.0",
     "streamlit==1.49.1",
 ]
 
-# Optional: authors, license
-authors = [{ name = "Sunny Savita" }]
-license = { text = "Proprietary" }
-
-# Optional: CLI command (python -m pip install -e . ke baad yeh create hoga)
-[project.scripts]
-ecomm-assistant = "ecomm_prod_assistant.cli:main"
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "flake8",
+    "mypy",
+]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["ecomm_prod_assistant*"]
+include = ["prod_assistant*"]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+"prod_assistant" = ["**/*.json", "**/*.yaml", "**/*.txt"]

@@ -59,6 +59,7 @@ class FlipkartScraper:
     def scrape_flipkart_products(self, query, max_products=1, review_count=2):
         """Scrape Flipkart products based on a search query."""
         options = uc.ChromeOptions()
+        options.page_load_timeout = 30 # Set timeout to 30 seconds
         driver = uc.Chrome(options=options, use_subprocess=True)
         search_url = f"https://www.flipkart.com/search?q={query.replace(' ', '+')}"
         driver.get(search_url)
