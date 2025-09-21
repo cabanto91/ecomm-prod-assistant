@@ -18,6 +18,7 @@ from prod_assistant.utils.config_loader import load_config
 from prod_assistant.utils.model_loader import ModelLoader
 from dotenv import load_dotenv
 
+
 class Retriever:
     def __init__(self):
         """_summary_"""
