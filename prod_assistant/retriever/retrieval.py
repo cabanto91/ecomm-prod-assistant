@@ -2,6 +2,13 @@ import os
 import sys
 from pathlib import Path
 
+from langchain.retrievers.document_compressors import LLMChainFilter
+from langchain.retrievers import ContextualCompressionRetriever
+from evaluation.ragas_eval import (
+    evaluate_context_precision,
+    evaluate_response_relevancy,
+)
+
 # Add the project root to the Python path for direct script execution
 project_root = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(project_root))
@@ -58,9 +65,26 @@ class Retriever:
             top_k = (
                 self.config["retriever"]["top_k"] if "retriever" in self.config else 3
             )
-            retriever = self.vstore.as_retriever(search_kwargs={"k": top_k})
+            mmr_retriever = self.vstore.as_retriever(
+                search_type="mmr",
+                search_kwargs={
+                    "k": top_k,
+                    "fetch_k": 20,
+                    "lambda_mult": 0.7,
+                    "score_threshold": 0.6,
+                },
+            )
+            
             print("Retriever loaded successfully.")
-            return retriever
+            
+            llm = self.model_loader.load_llm()
+            compressor = LLMChainFilter.from_llm(llm)
+
+            self.retriever = ContextualCompressionRetriever(
+                base_compressor=compressor, base_retriever=mmr_retriever
+            )
+
+            return self.retriever
 
     def call_retriever(self, query):
         """_summary_"""
